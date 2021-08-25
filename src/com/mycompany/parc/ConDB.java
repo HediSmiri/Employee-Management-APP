@@ -57,13 +57,13 @@ public class ConDB {
         conn = ConnectDB();
         try{
             Statement statement = null;
-        ResultSet res = null;
-        statement = conn.createStatement();
-        // Step 2.C: Executing SQL & retrieve data into ResultSet
-        res = statement.executeQuery(query);
-        conn.close();
-        // processing returned data and printing into console
-        return res ;
+            ResultSet res = null;
+            statement = conn.createStatement();
+            // Step 2.C: Executing SQL & retrieve data into ResultSet
+            res = statement.executeQuery(query);
+            conn.close();
+            // processing returned data and printing into console
+            return res ;
         }catch(SQLException e){
             System.out.print(e);
         }
@@ -83,6 +83,20 @@ public class ConDB {
         }
         return 1 ;
     }
+    
+    public int Update(String query){
+        Connection conn ;
+        conn = ConnectDB();
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            return 0 ;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1 ;
+    }
+    
     
     
 }

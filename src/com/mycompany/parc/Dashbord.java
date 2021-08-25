@@ -17,37 +17,44 @@ import java.sql.* ;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Smiri
  */
 public class Dashbord extends javax.swing.JFrame {
-    public void choice(Choice choice){
+    public void choice(Choice choice,String item,String table){
         choice.removeAll();
         choice.addItem("Select");
         DatabaseCon cnx = new DatabaseCon();
         try {
-            cnx.connex(choice, "Select matricule from User ;","matricule");
+            cnx.connex(choice, "Select * from "+table+" ;",item);
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(Dashbord.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public Dashbord(){
+        this.setTitle("Dashbord");
         initComponents();
         switchPannel(layot1);
         try{
             DatabaseCon cnx = new DatabaseCon();
-        cnx.connex(Service,"SELECT nomService FROM Service;","nomService");
+            cnx.connex(Service,"SELECT nomService FROM Service;","nomService");
         }catch(SQLException e){
             System.out.print(e);
         }
-        choice(choice1);
-        choice(choice2);
+        choice(choice1,"matricule","User");
+        choice(choice2,"matricule","User");
+        choice(choice3,"nomService","Service");
         
-      
+        
+        
+       
     }   
 
     /**
@@ -71,6 +78,7 @@ public class Dashbord extends javax.swing.JFrame {
         Ajouter = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
         MaterielAdd = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -88,10 +96,10 @@ public class Dashbord extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jFormattedTextField9 = new javax.swing.JFormattedTextField();
-        jFormattedTextField10 = new javax.swing.JFormattedTextField();
+        phone = new javax.swing.JFormattedTextField();
         jButton8 = new javax.swing.JButton();
         choice2 = new java.awt.Choice();
+        choice3 = new java.awt.Choice();
         layot4 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -217,21 +225,32 @@ public class Dashbord extends javax.swing.JFrame {
             }
         });
 
+        jButton11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton11.setText("Liste d'utilisateur");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layot1Layout = new javax.swing.GroupLayout(layot1);
         layot1.setLayout(layot1Layout);
         layot1Layout.setHorizontalGroup(
             layot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layot1Layout.createSequentialGroup()
                 .addGap(128, 128, 128)
-                .addGroup(layot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Ajouter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layot1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(12, 12, 12)))
-                .addGap(62, 62, 62)
-                .addComponent(jLabel1)
+                .addGroup(layot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layot1Layout.createSequentialGroup()
+                        .addGroup(layot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Ajouter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layot1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(12, 12, 12)))
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel1)))
                 .addContainerGap(308, Short.MAX_VALUE))
         );
         layot1Layout.setVerticalGroup(
@@ -250,7 +269,9 @@ public class Dashbord extends javax.swing.JFrame {
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -359,6 +380,13 @@ public class Dashbord extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton8.setText("Modifier Utilisateur");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        choice3.addItem("Select");
 
         javax.swing.GroupLayout layot3Layout = new javax.swing.GroupLayout(layot3);
         layot3.setLayout(layot3Layout);
@@ -370,19 +398,18 @@ public class Dashbord extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layot3Layout.createSequentialGroup()
                         .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layot3Layout.createSequentialGroup()
-                                    .addComponent(jLabel20)
-                                    .addGap(23, 23, 23)
-                                    .addComponent(jFormattedTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
-                                .addGroup(layot3Layout.createSequentialGroup()
+                            .addGroup(layot3Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(choice2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layot3Layout.createSequentialGroup()
+                                .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel19)
-                                    .addGap(32, 32, 32)
-                                    .addComponent(jFormattedTextField9))
-                                .addGroup(layot3Layout.createSequentialGroup()
-                                    .addComponent(jLabel18)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(choice2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jLabel20))
+                                .addGap(23, 23, 23)
+                                .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(choice3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(83, 83, 83))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layot3Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,21 +420,21 @@ public class Dashbord extends javax.swing.JFrame {
             .addGroup(layot3Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(59, 59, 59)
+                .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18)
                     .addComponent(choice2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jFormattedTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layot3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel20)
-                    .addComponent(jFormattedTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                    .addComponent(choice3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -909,7 +936,7 @@ public class Dashbord extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this.rootPane,
                 "Utilisateur est supprimer avec succes","",
                 JOptionPane.ERROR_MESSAGE);
-            choice(choice1);
+            choice(choice1,"matricule","User");
         }else{
             JOptionPane.showMessageDialog(this.rootPane,
                 "Operation Failed !","",
@@ -1059,6 +1086,87 @@ public class Dashbord extends javax.swing.JFrame {
         
     }//GEN-LAST:event_choice1MouseClicked
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        try {
+            ConDB cnx = new ConDB();
+        ResultSet rs = cnx.Result("Select * from User ;");
+        String columns [] =  {
+                    "Matricule", "Nom", "Prenom", "age", "phone", "Service"
+                };
+        String data[][] = new String[8][6];
+        int i = 0;
+        while(rs.next()){
+            int matricule = rs.getInt("matricule");
+            String nom = rs.getString("Nom");
+            String prenom = rs.getString("Prenom");
+            String age = rs.getString("age");
+            String phone = rs.getString("phone");
+            String service = rs.getString("Service");
+            data[i][0] = matricule + "";
+            data[i][1] = nom;
+            data[i][2] = prenom;
+            data[i][3] = age;
+            data[i][4] = phone;
+            data[i][5] = service;
+            i++;
+        }
+        
+        DefaultTableModel model = new DefaultTableModel(data, columns);
+        JTable table = new JTable(model);
+        table.setShowGrid(true);
+        table.setShowVerticalLines(true);
+        JScrollPane pane = new JScrollPane(table);
+        JFrame f = new JFrame("List d'utilisateur");
+        JPanel panel = new JPanel();
+        panel.add(pane);
+        f.add(panel);
+        f.setSize(500, 250);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        f.setVisible(true);
+        
+        }catch(SQLException e){
+            System.out.print(e);
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    
+    
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        
+        if (choice2.getSelectedIndex() ==0 ){
+           JOptionPane.showMessageDialog(this.rootPane,
+                "Select Un matricule a Modifier","",
+                JOptionPane.ERROR_MESSAGE);
+       }
+       String mat = choice2.getSelectedItem();
+       String phoneNumber = phone.getText();
+       int sService = choice3.getSelectedIndex();
+       String query ;
+       if (phoneNumber.equals("")){
+           query = "UPDATE User set Service = "+sService+" Where matricule = "+mat+";";
+       }else if (sService == 0){
+           query = "UPDATE User set phone = "+phoneNumber+" Where matricule = "+mat+";";
+       }else{
+           query = "UPDATE User set Service = "+sService+", phone = "+phoneNumber+" Where matricule = "+mat+";";   
+            }
+          
+       ConDB cnx = new ConDB();
+       int res = cnx.Update(query);
+       
+       if (res == 0){
+            JOptionPane.showMessageDialog(this.rootPane,
+                "Modification Avec Succes","",
+                JOptionPane.ERROR_MESSAGE);
+       }else{
+            JOptionPane.showMessageDialog(this.rootPane,
+                "Error de Modification","",
+                JOptionPane.ERROR_MESSAGE);
+       }
+            
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1107,8 +1215,10 @@ public class Dashbord extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField UserMat;
     private java.awt.Choice choice1;
     private java.awt.Choice choice2;
+    private java.awt.Choice choice3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
@@ -1118,7 +1228,6 @@ public class Dashbord extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JFormattedTextField jFormattedTextField10;
     private javax.swing.JFormattedTextField jFormattedTextField13;
     private javax.swing.JFormattedTextField jFormattedTextField14;
     private javax.swing.JFormattedTextField jFormattedTextField15;
@@ -1127,7 +1236,6 @@ public class Dashbord extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField21;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1165,5 +1273,6 @@ public class Dashbord extends javax.swing.JFrame {
     private javax.swing.JPanel layot3;
     private javax.swing.JPanel layot4;
     private javax.swing.JPanel layot6;
+    private javax.swing.JFormattedTextField phone;
     // End of variables declaration//GEN-END:variables
 }
